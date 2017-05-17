@@ -1,0 +1,38 @@
+
+$("#suggestions").text('')
+
+var cnt = 0
+
+
+<% @questions.each do |question| %>
+        <% if @result.include? question.userquestion %>
+    
+if(cnt <=2)
+{
+  $("#suggestions").append('<%= j link_to question.userquestion, question_path(question.id) %><br>')
+  $("#suggestions").append('<%= j @subjects.find(question.subject_id).subjectname %> ') 
+  $("#suggestions").append(' • <%= j render "suggs", que: question %> Answers • Asked by ')
+  $("#suggestions").append('<%= j link_to @userdtl.find(question.user_id).firstname, userdetail_path(question.user_id) %>') 
+  $("#suggestions").append('<hr style="border-top: 1px dotted #8c8b8b; width:100%">')
+}
+else
+{
+  }
+cnt++;
+<% end %>
+  
+<% end %>
+
+
+var x = '<%= @userq %>'
+   if(x=="")
+   {
+   	$("#suggestions").text('')
+   }
+
+
+
+    
+    	
+   
+

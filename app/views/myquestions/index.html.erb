@@ -1,0 +1,82 @@
+
+<html>
+<body>
+<%= render "layouts/header" %>
+<div class="container">
+<style>
+.modal-dialog {
+  height: 50px;
+  padding-top:10%;
+}
+
+.modal-content {
+  height: 50px;
+  width: 80px
+  text-align: 20px;
+  overflow:visible;
+}
+.modal-body {
+  height: 50px;
+  overflow: auto;
+}
+</style>
+
+
+<%= link_to 'What is your Question',new_question_path,"data-toggle" => "modal",'data-target'=> '#loginModal' %>
+<div class="modal" id="loginModal">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<h1>Questions</h1>
+  <div class="container">
+
+    <% @questions.each do |question| %>
+        <% if question.user_id == current_user.id %>
+          <div class="row">
+              <section class="panel panel-info">
+                  <header class="panel-heading">
+                    <h4><%=question.subject.subjectname %></h4>
+                  </header>
+                  <section class="row panel-body">
+                      <section class="col-md-6">
+                        <h4> <a href="#"><i class="glyphicon glyphicon-question-sign"></i><%= link_to question.userquestion, question %></a></h4> <hr>
+                        
+                        
+                      </section>
+                      <section class="col-md-2">
+                        <ul id="post-topic">
+                          <li class="list-unstyled"> Answers:<%= question.answers.count%> </li>
+            
+                        </ul>
+                      </section>
+                      <section class="col-md-3">
+                        <h4> <a href="#"><i class="glyphicon glyphicon-link"> </i> Question asked by </a></h4> <hr>
+                        <i class="glyphicon glyphicon-user"></i> <%= link_to "You", userdetail_path(question.user_id) %> </a><br><br>
+                        <i class="glyphicon glyphicon-calendar"></i><%= time_ago_in_words(question.created_at)%> 
+                      </section>
+
+                   
+                  </section>
+                  
+                  <hr>
+              
+              </section>
+                  
+            </div>
+            <% end %>
+          <!-- End of the question -->
+           <% end %>
+        </div>
+
+<br>
+
+
+</div>
+</body>
+</html>

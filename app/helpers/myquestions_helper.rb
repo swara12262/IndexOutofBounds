@@ -1,0 +1,2 @@
+module MyquestionsHelper
+end

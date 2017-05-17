@@ -1,0 +1,72 @@
+<div class="col-md-3 ">
+        <div class="panel panel-default">
+          <div class="panel-body">
+                <% if !(request.original_url.include? '/questions/myquestionsindex') && !(request.original_url.include? '/questions/') %>
+                <%= link_to '<h4>Ask a Question</h4>'.html_safe,new_question_path,:class=>'btn btn-default',:style=>"width: 100%;margin-bottom:0;","data-toggle" => "modal",'data-target'=> '#loginModal' %>
+                <hr>
+                <% end %>
+            
+              <h4 class="alert alert-info" align="center"><strong>Activities</strong></h4>
+         
+              <div><i class="fa fa-bars"></i> All Threads </a></div>
+              <div><i class="fa fa-check"></i><%= link_to'Answered:',questions_answeredque_path%><span class="badge badge-theme"><%= @cnt %></span></div>
+              <br>
+                <h4 class="alert alert-info" align="center"><strong> Subjects</strong></h4>
+                  <div class="h-divider"></div>
+                    <% @subjects.each do |subject| %>
+                         <% if @userdtl.find(current_user.id).interests.include? subject.subjectname %>
+                          <p class='text-primary' style='font-size:17px;'>•&emsp;<%= link_to subject.subjectname, questions_interestwisequestions_path(:subjectname => subject.subjectname) %> <span class="badge badge-theme pull-right">
+                        <%= @questions.where(:subject_id => subject.id).count %>
+          </span></p>
+                <% end %>
+                    <% end %>
+                <div class="h-divider"></div>      
+                  <h4 class="alert alert-info" align="center"><strong> Recent Questions</strong></h4>
+                  
+                 
+                    <% @newquestions.each do |question| %>
+                
+                      <div class="forum-thread-card" style="margin: 10px" >
+                        <div class="row">
+                          <a class="thread-posts-count pull-right" href="#">
+                            <span class="badge badge-theme" style="background-color:#158CBA;"><%= question.answers.count%>
+                                
+                            </span>
+                          </a>  
+                          <div>
+                                <%= image_tag @userdtl.find(question.user_id).image, class: 'img-rounded avatar pull-left', style: 'height:40px;width:40px; margin-right:20px' %>
+                           </div>
+                           </div>
+                            <div class="row">
+                                <h5>
+                                    <i class="fa fa-thumb-tack fa-text-muted text-muted"></i> 
+                                    <%= link_to question.userquestion, question %>
+                                  
+                                </h5>
+                              </div>
+                                <div class="thread-details">
+                                  <small>
+                                  <strong><a style="color: #4ea1d3"><%= question.subject.subjectname.upcase %></a></strong>
+                                  • Asked <time datetime="2016-10-26T16:35:23Z" data-local="time-ago"><%= time_ago_in_words(question.created_at)%> ago </time> by <%= link_to @userdtl.find(question.user_id).firstname.upcase, userdetail_path(question.user_id) ,:style=>"color:#158CBA"%> 
+                                    </small>
+                                </div>
+                           
+                          <br>
+                      </div>
+                      <!-- end of forum card -->
+                       <div class="h-divider">
+                        </div>
+                      
+                
+                      <% end %>
+        
+                
+                    <hr>
+            
+          </div> 
+          <!-- end of panel body -->
+        
+        </div> 
+        <!-- end of panel default -->
+  </div>
+      <!-- end of col md 3 -->

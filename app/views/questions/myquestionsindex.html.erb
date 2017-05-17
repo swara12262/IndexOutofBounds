@@ -1,0 +1,141 @@
+
+<html>
+<body>
+<%= render "layouts/header" %>
+<div class="container-fluid">
+
+<style>
+.forum-thread-card {
+    display: block;
+    border-radius: 5px;
+    margin-left: 12px;
+    padding: 0px 10px 0px 60px;
+    position: relative;
+}
+.panel {
+    margin-bottom: 24px;
+    background-color: #fff;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+hr {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border: 0;
+    width:100%;
+    border-top: 1px solid #eeeeee;
+
+}
+.h-divider{
+ margin-top:15px;
+ margin-bottom:24px;
+ height:1px;
+ width:100%;
+ border-top:1px solid #bdbdbd;
+}
+.body{
+  font-size: 25px;
+line-height: 1.5;
+color: #555555;
+-webkit-text-size-adjust: 100%;
+box-sizing: border-box;
+}
+</style>
+
+
+
+<div class="modal" id="loginModal">
+    <div class="modal-dialog" style="height: 50px; padding-top:10%;">
+    <!-- Modal content-->
+    <div class="modal-content" style="height: 50px;width: 800px; text-align: 20px;overflow:visible;">
+         
+      
+      <div class="modal-body" style=" height: 50px; overflow: auto;">
+      
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+  <div class="container-fluid ">
+    
+      <!--Side bar -->
+      <%= render "layouts/leftstack" %>
+    <!--side bar end-->
+    
+    <!-- end of col md 3 -->
+    <!-- forum question start -->
+      <div class="col-sm-9">
+          <div class="alert alert-info">
+            <p><strong>IOB</strong> to join the conversation. Ask questions about your code, get help adding a new feature, and discuss implementation details with other members.</p>
+          </div>
+
+
+          <div class="panel panel-default">
+            <div class="panel-body">
+               <% @questions.each do |question| %>
+                  <% if question.user_id == current_user.id %>
+                      <!-- single question -->
+                      <div class="forum-thread-card" style= "border-bottom: 1px #bdbdbd;" >
+                          <div class="row">
+                          <a class="thread-posts-count pull-right" href="#">
+                            <span class="badge badge-theme" style="background-color:#158CBA;"><%= question.answers.count%>
+                                <small>answers</small>
+                            </span>
+                          </a>
+
+                                <h4>
+                                <%= image_tag @userdtl.find(question.user_id).image, class: 'img-rounded avatar pull-left', style: 'height:40px;width:40px; margin-right:20px' %>
+
+                                    <i class="fa fa-thumb-tack fa-text-muted text-muted"></i> 
+                                    <%= link_to question.userquestion, question %>
+                                  
+                                </h4>
+
+                                <div class="thread-details">
+                                  <strong><a style="color: #4ea1d3" href="#"><%= question.subject.subjectname.upcase %></a></strong>
+                                  • Asked <time datetime="2016-10-26T16:35:23Z" data-local="time-ago"><%= time_ago_in_words(question.created_at)%> ago </time> by <%= link_to @userdtl.find(question.user_id).firstname.upcase, userdetail_path(question.user_id) ,:style=>"color:#158CBA"%> 
+                                </div>
+                          </div>  
+                          <br>
+                    </div>
+
+                    <div class="h-divider">
+                  </div>
+                  <% end %>
+              
+               <% end %>
+              <!-- single question end -->
+
+              
+              
+
+            </div> <!-- panel body -->
+          </div> <!-- panel default -->
+
+      </div>
+     
+     
+
+    <!-- forum questions end -->
+    <!-- question list end -->
+   
+           
+
+        </div>
+
+
+
+<br>
+
+
+</div>
+    
+<%= render "layouts/footer" %>
+
+</body>
+</html>

@@ -1,0 +1,53 @@
+
+$("#box1").text('')
+$('#myModal').modal({
+        show: 'true'
+    });
+var cnt = 0
+<% @userdtl.each do |user| %>
+        <% if @result.include? user.firstname %>
+    
+if(cnt <=2)
+{
+  $("#box1").append('Profile: <%= j link_to user.firstname+" "+user.lastname, userdetail_path(user.id) %>')
+  $("#box1").append('<hr style="border-top: 1px dotted #8c8b8b; width:100%">')
+}
+else
+{
+  }
+cnt++;
+<% end %>
+  
+<% end %>
+
+var cnt=0
+
+<% @questions.each do |question| %>
+        <% if @result.include? question.userquestion %>
+    
+if(cnt <=2)
+{
+  $("#box1").append('Topic: <%= j @subjects.find(question.subject_id).subjectname %><br>') 
+  $("#box1").append('Question: <%= j link_to question.userquestion, question_path(question.id) %>')
+  $("#box1").append('<hr style="border-top: 1px dotted #8c8b8b; width:100%">')
+}
+else
+{
+  }
+cnt++;
+<% end %>
+  
+<% end %>
+
+var x = '<%= @userq %>'
+   if(x=="")
+   {
+   	$("#box1").text('')
+   }
+
+
+
+    
+    	
+   
+

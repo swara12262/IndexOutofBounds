@@ -1,0 +1,26 @@
+ <div class="row">
+              <section class="panel panel-info">
+                  <header class="panel-heading">
+                    <h4><%=@project.title %></h4>
+                  </header>
+                  <section class="row panel-body">
+                      <section class="col-md-12">
+                        <h4></i><%= @project.description%></a></h4> <hr>                
+                      </section>
+                      <section>
+                        <h4>Technology used :
+                        <%= @project.technology %></h4>
+                      </section>
+                      <section>
+                      <h4>URL : <%= link_to @project.githublink %></h4>
+                      <br>
+                      </section>
+                                         
+                  </section>                  
+                  <hr>              
+              </section>
+                  
+            </div>
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Back', projects_path %>

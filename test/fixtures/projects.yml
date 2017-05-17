@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyText
+  technology: MyText
+  description: MyText
+  githublink: MyText
+
+two:
+  title: MyText
+  technology: MyText
+  description: MyText
+  githublink: MyText

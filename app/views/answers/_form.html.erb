@@ -1,0 +1,21 @@
+
+<%= form_for([@question, @question.answers.build]) do |f|  %>
+
+  <div class="field">
+    <%= f.label :useranswer %>
+    <%= f.text_area :useranswer ,class:'wysihtml5'%>
+  </div>
+
+ 
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+<script type="text/javascript">
+   $(function() {
+  $('.wysihtml5').each(function(i, elem) {
+    $(elem).wysihtml5();
+  });
+	})
+</script>

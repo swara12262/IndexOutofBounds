@@ -1,0 +1,82 @@
+<html>
+<body>
+<%= render "layouts/header" %>
+<div class="container">
+
+<style>
+.modal-dialog {
+  height: 50px;
+  padding-top:10%;
+}
+
+.modal-content {
+  height: 50px;
+  width: 80px
+  text-align: 20px;
+  overflow:visible;
+}
+.modal-body {
+  height: 50px;
+  overflow: auto;
+}
+</style>
+
+<%= link_to 'Add a new Project',new_project_path, "data-toggle" => "modal",'data-target'=> '#loginModal',style:'font-size:20px' %>
+<div class="modal" id="loginModal">
+    <div class="modal-dialog">
+    <!-- Modal content-->
+    <div class="modal-content">
+      
+      <div class="modal-body">
+      </div>
+    </div>
+  </div>
+</div>
+<h2><b>My Projects</b></h2>
+  <div class="container">
+    <% @projects.each do |project| %>
+        <% if project.user_id == current_user.id %>
+          <div class="row">
+              <section class="panel panel-info">
+                  <header class="panel-heading">
+                    <h4><b><%=project.title %></b></h4>
+                  </header>
+                  <section class="row panel-body">
+                      <section class="col-md-12">
+                        <h4></i><%= project.description%></a></h4> <hr>                
+                      </section>
+                      <section>
+                        <h4><b>Technology used :</b>
+                        <%= project.technology %></h4>
+                      </section>
+                      <section>
+                      <h4><b>URL : </b><%= link_to project.githublink %></h4>
+                      <br>
+                      </section>
+                      <section>
+                      <h4>
+                    <i class=" glyphicon glyphicon-pencil"></i>&nbsp;<%= link_to 'Edit', edit_project_path(project) %>
+        <i class="glyphicon glyphicon-trash">&nbsp;</i><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></h4>
+        </section>
+                      </section>
+                   
+                  </section>                  
+                  <hr>              
+              </section>
+                  
+            </div>
+            <% end %>
+          <!-- End of the question -->
+           <% end %>
+        </div>
+<br>
+</div>
+</body>
+</html>
+
+
+
+
+
+
+

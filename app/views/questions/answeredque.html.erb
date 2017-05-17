@@ -1,0 +1,155 @@
+
+<html>
+<style>
+.forum-thread-card {
+    display: block;
+    border-radius: 5px;
+    margin-left: 12px;
+    padding: 0px 10px 0px 60px;
+    position: relative;
+}
+.panel {
+    margin-bottom: 24px;
+    background-color: #fff;
+    border: 2px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,0.05);
+}
+hr {
+    margin-top: 24px;
+    margin-bottom: 24px;
+    border: 0;
+    width:100%;
+    border-top: 1px solid #eeeeee;
+
+}
+.h-divider{
+ margin-top:15px;
+ margin-bottom:24px;
+ height:1px;
+ width:100%;
+ border-top:1px solid #bdbdbd;
+}
+.body{
+  font-size: 25px;
+line-height: 1.5;
+color: #555555;
+-webkit-text-size-adjust: 100%;
+box-sizing: border-box;
+}
+
+.forum_post {
+    position: relative;
+    border-radius: 5px;
+}
+.forum_post.original-poster {
+    background-color: #f7f7fa;
+    margin: -15px;
+    padding: 15px;
+}
+.forum_post .forum-post-header {
+    margin-left: 65px;
+}
+.forum_post .forum-post-body {
+    margin-left: 65px;
+}
+.forum_post .forum-post-actions {
+    border-top: 1px solid #efefef;
+    overflow: hidden;
+    padding: 10px 0px;
+}
+</style>
+
+
+
+<body>
+<%= render 'layouts/header.html' %>
+<p id="notice"><%= notice %></p>
+  <!-- container fuild strat-->
+  <div class="container-fluid">
+      <!--Side bar -->
+      <%= render "layouts/leftstack" %>
+      <!--side bar end-->
+      
+      <!-- col starts -->
+        <div class="col-sm-9">
+
+                <div class="alert alert-info">
+                  <p><strong><a href="/pricing">IOB</a></strong> to join the conversation. Ask questions about your code, get help adding a new feature, and discuss implementation details with other members.</p>
+                </div>
+<% @answerd_questions.each do |answer| %>
+                  <!-- panel default start -->
+                  <div class="panel panel-default">
+                    <div class="panel-body">
+                      <!-- Question-->
+                      <h1><i class="fa fa-thumb-tack text-muted"></i> <%= @questions.find( answer.question_id).userquestion %></h1>
+                        <p class="thread-details">
+                          <strong style="color: #4ea1d3"><%= @questions.find(answer.question_id).subject.subjectname %></strong>
+                          • Asked <time datetime="2016-10-26T16:35:23Z" data-local="time-ago"><%=time_ago_in_words(@questions.find(answer.question_id).created_at)%></time> ago by <%= link_to @userdtl.find(@questions.find(answer.question_id).user_id).firstname.upcase, userdetail_path(answer.user_id) ,:style=>" color: #4ea1d3"%>
+                        </p>
+
+                      <br>
+                <!-- end question --> 
+            <!-- answers start -->
+              <div class="forum_post original-poster" id="forum_post_2566">
+                <div class="forum-post-header">
+                    <%= image_tag @userdtl.find(answer.user_id).image, class: 'img-rounded avatar pull-left', style: 'height:40px;width:40px; margin-right:20px' %>
+
+
+                      <p>
+                      <strong class="forum-post-user" style="color: #4ea1d3"><%= link_to 'You', userdetail_path(answer.user_id) %></strong>
+                      <small><span class="label label-default" data-toggle="tooltip" title="" data-original-title="1-Month Subscriber"><i class="fa fa-diamond"></i></span> <span class="label label-primary"><%= link_to @userdtl.find(answer.user_id).usertype, userdetail_path(answer.user_id) %></span> answered <time datetime="2016-10-26T16:35:23Z" data-local="time" data-format="%b %d, %Y" data-localized="true"><%= time_ago_in_words(answer.created_at)%></time> ago </small>
+                      </p>
+                </div>
+
+                <div class="forum-post-body">
+                    <p><%= answer.useranswer.html_safe %></p>
+
+                    <div class="forum-post-actions">
+
+                          <div data-behavior="reactions" data-id="2566">
+                              <!---Likes -->
+                              <i class="fa fa-smile-o"></i>
+                              <% if !@likes.exists?(user_id: current_user.id, answer_id: answer.id) %>
+                                 <%= %>
+
+                                  <%= link_to ("<button class='btn'><i class='fa fa-thumbs-up icon'></i></button>").html_safe,  likes_index_path(:question_id => @questions.find( answer.question_id),:answer_id => answer.id,:frompage => 'answeredquestions') %>
+                                  <%= @likes.where(:answer_id => answer.id).count %>
+                              <% else %>
+                                  <%= link_to ("<button class='btn'><i class='fa fa-thumbs-up text-primary icon'></i></button>").html_safe,  likes_destroy_path(:question_id => @questions.find( answer.question_id),:answer_id => answer.id, :frompage => 'answeredquestions') %>
+                                  <%= @likes.where(:answer_id => answer.id).count  %>
+                               <% end %>
+                                <!---Dislikes -->
+                                <% if !@dislikes.exists?(user_id: current_user.id, answer_id: answer.id) %>
+                                    <%= link_to ("<button class='btn'><i class='fa fa-thumbs-down icon'></i></button>").html_safe, dislikes_index_path(:question_id => @questions.find( answer.question_id),:answer_id => answer.id, :frompage => 'answeredquestions')%>
+                                    <%= @dislikes.where(:answer_id => answer.id).count %>
+                                <% else %>
+                                    <%= link_to ("<button class='btn'><i class='fa fa-thumbs-down text-primary icon'></i></button>").html_safe, dislikes_destroy_path(:question_id => @questions.find( answer.question_id),:answer_id => answer.id, :frompage => 'answeredquestions') %>
+                                    <%= @dislikes.where(:answer_id => answer.id).count %>
+                                 <% end %>
+                          
+                          </div>
+
+                      </div>
+
+                  </div>
+                  <!-- forum post body end -->
+                </div>
+                <hr>
+              
+              
+    </div>
+    </div>
+    <%end%>
+   <!-- panel default ends -->
+
+      </div>
+
+      <!-- col ends -->
+
+  </div>
+  <!-- container fluid end -->
+  <%= render "layouts/footer" %>
+</body>
+</html>

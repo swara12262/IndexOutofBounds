@@ -1,0 +1,67 @@
+<style type="text/css">
+  .questiontext{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  #suggestions{
+padding: 5px 20px;
+
+    }
+    #que {
+    padding: 10px 30px;
+  }
+</style>
+
+
+
+ <%= form_for(question) do |f| %>
+  <% if question.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(question.errors.count, "error") %> prohibited this question from being saved:</h2>
+
+      <ul>
+      <% question.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  
+ <div class="row">
+              <section class="panel panel-info">
+                  <header class="panel-heading">
+                     <%= image_tag @userdtl.find(current_user.id).image, class: 'avatar', style: 'height:10%;width:10%',class: 'img-circle avatar' %>
+                      </i>&emsp;<%= link_to @userdtl.find(current_user.id).firstname.capitalize%>&nbsp;asks
+                    <div class="field"> 
+                      <%= f.label :'Choose your Interests' %>
+                        <%= f.collection_select(:subject_id,Subject.all, :id,:subjectname)  %>
+                        </div>
+                  </header>
+                  <section class="row panel-body" style="height: 150px">
+                   <h4>
+                    <div class="field">
+                            <%= f.text_area :userquestion ,class:'transparent-input questiontext',style:'border: none;width:100%;height:10%',placeholder: "What is your question?", id: "input", remote: true %>
+
+                      <hr style="border-top: 1px dotted #8c8b8b; width:100%"> 
+                      <div id="suggestions" style="background: #fff">
+                      </div>
+                   </div>
+                      <h4>
+                        
+                        <%= f.submit class:'btn btn-primary',style:'float:right;align:bottom', id: "button",  remote: true  %>                        
+                  </section>
+              </section>
+                  
+  </div>
+
+<script type="text/javascript">
+
+$('#input').on('input',function(e){
+
+      $.ajax({ url: "questions/changetext?userquestion=" +$('#input').val()})
+ 
+    });
+
+</script>
+
+<% end %>

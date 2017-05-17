@@ -1,0 +1,53 @@
+
+<style>
+body{
+background-image: url(/assets/quorabg.png);
+background-position: left top;
+ 
+
+}
+
+</style>
+
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div class="container">
+    <div class="row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-6">
+      <div class="well" style=" background-color: black; padding: 30px;
+      padding-top:20px;margin-top:200px;opacity: 0.8;margin-left:70px">
+        <h1 style="color: white;"><b>Sign Up</b></h1>
+        <div class="input-group input-group-md">
+        <span class="input-group-addon "><span class="glyphicon glyphicon-user"></span></span>
+         <%= f.email_field :email, autofocus: true,class:'form-control', style:'color: black',placeholder:"Email" %>
+        
+        </div>
+        <br>
+        <div class="input-group input-group-md">
+          <span class="input-group-addon "><span class="glyphicon glyphicon-lock"></span> </span> 
+      <%= f.password_field :password, autocomplete: "off",class:'form-control', style:'color: black',placeholder:"Password" %>
+         </div>
+        <% if @minimum_password_length %>
+        <em style="color:#c40303">(<%= @minimum_password_length%> characters minimum)</em>
+        <% end %>
+        <br>
+        <div class="input-group input-group-md">
+          <span class="input-group-addon "><span class="glyphicon glyphicon-lock"></span> </span> 
+      <%= f.password_field :password_confirmation, autocomplete: "off" ,class:'form-control', style:'color: black',placeholder:"Confirm Password" %>
+         </div>
+         <br>
+         <%= render "devise/shared/links", style:'float:center'%><br>
+         <%= f.submit "Sign up" ,class:'btn btn-primary'%>
+
+          
+      </div>
+      
+    </div>
+      
+    </div>
+    </div>
+  </div>
+<% end %>

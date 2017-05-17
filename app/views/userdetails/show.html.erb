@@ -1,0 +1,153 @@
+<!--new code starts -->
+<%= render "layouts/header" %>
+<style>
+
+.timeline {
+    list-style: none;
+    padding: 20px 0 20px;
+    position: relative;
+}
+.timeline::before {
+    top: 0;
+    bottom: 0;
+    position: absolute;
+    content: " ";
+    width: 3px;
+    background-color: #eeeeee;
+    right: 25px;
+    margin-left: -1.5px;
+}
+</style>
+
+<div class="container">
+  <div class="row">
+    <div class="col-sm-3">
+      <%= image_tag @userdetail.image , style: 'height:200px;width:200px',class:'center-block img-responsive' %>
+        <h2>  <%= @userdetail.firstname.capitalize %> 
+        <%= @userdetail.lastname.capitalize %><h2>     
+         <p><span class="label label-default" data-toggle="tooltip" title="" data-original-title="1-Month Subscriber"><i class="fa fa-diamond"></i></span> <span class="label label-primary"><%= @userdetail.usertype %></span></p>
+
+      <hr>
+
+      <p class="user-profile-joined">
+        <i class="fa fa-clock-o"></i>
+        Joined <time datetime="2014-04-16T21:29:39Z" data-local="time-ago" title="April 17, 2014 at 2:59am IST">on <%= @userdetail.created_at %></time>
+      </p>
+      
+      <p><i class="fa fa-diamond"></i> <%= @questions.where(:user_id=>@userdetail.user_id).count %> questions answered</p>
+
+      <hr>
+      <% if current_user.id==@userdetail.user_id %>
+      <%= link_to 'Edit' ,edit_userdetail_path(current_user), class: 'btn btn-default btn-lg'%>
+      <% end %>
+
+    </div>
+
+
+   
+  <div class="col-sm-9">   
+      <hr>
+      <ul id="tabs" class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#tab" aria-controls="tab" role="tab" data-toggle="tab">Personal Details</a></li>
+        <li role="presentation"><a href="#tab3" aria-controls="tab3" role="tab" data-toggle="tab">Projects</a></li>
+       
+      </ul>
+      <div class="tab-content">
+        
+        <div role="tabpanel" class="tab-pane active" id="tab"><br>
+                  <h2> <%= @userdetail.firstname.capitalize %> 
+                  <%= @userdetail.lastname.capitalize %><h2>
+                  <p><strong>Date of Birth: </strong>  <%= @userdetail.dateofbirth %></p>
+                  <p><strong>Gender: </strong>  <%= @userdetail.gender %></p>
+                  <p><strong>Country: </strong>  <%= @userdetail.country %>DIA</p>
+                  <p><strong>I am a : </strong>  <%= @userdetail.usertype %></p>
+                <p><strong>Qualification: </strong>  <%= @userdetail.qualification %></p>
+
+                <p><strong>Skills: </strong>                              
+                <%= @userdetail.interests %>
+                             
+                </p>
+              
+          </div>
+
+
+
+        <div role="tabpanel" class="tab-pane" id="tab3">
+           
+         
+            
+            <!-- project start -->
+            <div class="container">
+              <div class="page-header">
+                <h1 id="timeline">Projects</h1>
+              </div>
+              <ul class="timeline" >
+                <% @projects.each do |project| %>
+                <li >
+                  <div class="timeline-badge"><i class="glyphicon glyphicon-check"></i></div>
+                  <div class="timeline-panel" style="background-color: white">
+                    <div class="timeline-heading">
+                      <h4 class="timeline-title"><%=project.title %></h4>
+                      <p><small class="text-muted"><i class="glyphicon glyphicon-time"></i><%= project.created_at%></small></p>
+                    </div>
+                    <div class="timeline-body">
+                      
+
+                      <p><i class="fa fa-file"></i>&emsp;<%= project.description%></p><br>
+                      
+                      <button type="button" class="btn btn-primary btn-sm" >
+                          <i class="fa fa-link"></i> LINK<%= link_to '', project.githublink %> 
+                        </button>
+                     
+                        
+                        <% if project.user_id == current_user.id %>
+                           
+
+                                  <%= link_to '<i class="glyphicon glyphicon-pencil">&nbsp;</i>'.html_safe, edit_project_path(project),class:"btn btn-primary btn-sm" %> 
+                                
+                               <%= link_to '<i class="glyphicon glyphicon-trash">&nbsp;</i>'.html_safe, project, method: :delete, data: { confirm: 'Are you sure?' }, class:"btn btn-primary btn-sm"%>
+                            </button>
+                            
+                        <% end %> 
+                    </div>
+                  </div>
+                </li>
+                <% end %>
+                
+                <!-- add project -->
+
+                 <% if current_user.id==@userdetail.user_id %>
+                       
+                    <%= render  "projects/form" ,project: @project %>
+                 
+                  <% end %>
+                <!-- end add project -->
+              </ul>
+            <!-- project end -->
+            <br>
+            
+        </div>
+       
+        </div>
+      </div>
+    </div>
+  
+  </div>
+</div>
+<%= render 'layouts/footer' %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
